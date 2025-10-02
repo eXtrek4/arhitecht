@@ -78,7 +78,7 @@ This will start a local server at `http://localhost:3000`
 
 ### Users Table
 - `id` - UUID primary key
-- `firebase_uid` - Firebase user ID
+- `supabase_uid` - Supabase user ID
 - `email` - User email
 - `name` - Display name
 - `photo_url` - Profile picture URL

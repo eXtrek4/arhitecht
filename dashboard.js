@@ -30,7 +30,7 @@ async function storeUserInSupabase(user, session) {
         const { data, error } = await supabase
             .from('users')
             .upsert({
-                firebase_uid: user.id, // Using Supabase user ID instead of Firebase UID
+                supabase_uid: user.id, // Using Supabase user ID
                 email: user.email,
                 name: user.user_metadata?.full_name || user.user_metadata?.name,
                 photo_url: user.user_metadata?.avatar_url,
@@ -42,7 +42,7 @@ async function storeUserInSupabase(user, session) {
                 updated_at: new Date().toISOString(),
                 last_login: new Date().toISOString()
             }, {
-                onConflict: 'firebase_uid'
+                onConflict: 'supabase_uid'
             });
 
         if (error) {
