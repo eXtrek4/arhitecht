@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arhitech: The AI Agent for Google Sheets</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Arhitech</div>
+            <div class="user-info">
+                <span id="userEmail"></span>
+                <button id="signOutBtn" class="sign-out-btn">Sign Out</button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <h1 class="title">Work on something great!</h1>
+            
+            <div class="action-card">
+                <div class="card-header">
+                    <span class="greeting">Hey Arhitech</span>
+                </div>
+                <button id="newSheetBtn" class="action-btn primary">
+                    <span class="btn-icon">✈️</span>
+                    Start on a new Google Sheet
+                </button>
+            </div>
+            
+            <div class="divider">
+                <span class="divider-text">or</span>
+            </div>
+            
+            <button id="existingSheetBtn" class="action-btn secondary">
+                <div class="google-sheets-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="#0F9D58" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                    </svg>
+                </div>
+                Choose existing Sheet
+            </button>
+        </div>
+        
+        <div class="footer">
+            <div class="trial-message">
+                <span class="gift-icon">🎁</span>
+                Hey <span id="userName"></span>, you have 1 day of Pro trial for free! In this period, you can use any premium AI models like Claude 4 Sonnet, and access all other Pro features.
+            </div>
+            <p>Need help? Email us at <a href="mailto:support@arhitech.ai">support@arhitech.ai</a></p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

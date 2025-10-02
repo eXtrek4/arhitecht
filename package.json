@@ -1,0 +1,30 @@
+{
+  "name": "arhitech-web",
+  "version": "1.0.0",
+  "description": "Arhitech - AI Agent for Google Sheets Web Application",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 3000 -c-1",
+    "dev": "npx http-server -p 3000 -c-1 -o",
+    "build": "echo 'No build process needed for static files'",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "google-sheets",
+    "ai",
+    "chrome-extension",
+    "oauth2",
+    "supabase"
+  ],
+  "author": "Arhitech Team",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/arhitech-web.git"
+  },
+  "homepage": "https://arhitech.ai"
+}

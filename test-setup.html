@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arhitech - Setup Test</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+        .warning { color: #ffc107; }
+        .info { color: #17a2b8; }
+        button {
+            background: #7c3aed;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #6d28d9;
+        }
+        pre {
+            background: #f1f3f4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Arhitech Setup Test</h1>
+    <p>This page helps you verify that your Arhitech setup is working correctly.</p>
+
+    <div class="test-section">
+        <h2>Configuration Test</h2>
+        <div id="config-status">Testing configuration...</div>
+        <button onclick="testConfig()">Test Configuration</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Supabase Auth Test</h2>
+        <div id="supabase-auth-status">Testing Supabase Auth...</div>
+        <button onclick="testSupabaseAuth()">Test Supabase Auth</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Supabase Test</h2>
+        <div id="supabase-status">Testing Supabase...</div>
+        <button onclick="testSupabase()">Test Supabase</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Next Steps</h2>
+        <div id="next-steps">
+            <ol>
+                <li>Update your <code>config.js</code> with real credentials</li>
+                <li>Follow the <code>GOOGLE_CONSOLE_SETUP.md</code> guide</li>
+                <li>Test the authentication flow</li>
+                <li>Deploy to your hosting platform</li>
+            </ol>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        function testConfig() {
+            const status = document.getElementById('config-status');
+            
+            if (typeof CONFIG === 'undefined') {
+                status.innerHTML = '<span class="error">❌ CONFIG object not found. Make sure config.js is loaded.</span>';
+                return;
+            }
+
+            let issues = [];
+            
+            if (CONFIG.supabase.url === 'your-supabase-url') {
+                issues.push('Supabase URL not configured');
+            }
+            if (CONFIG.supabase.anonKey === 'your-supabase-anon-key') {
+                issues.push('Supabase anon key not configured');
+            }
+
+            if (issues.length === 0) {
+                status.innerHTML = '<span class="success">✅ Configuration looks good!</span>';
+            } else {
+                status.innerHTML = '<span class="warning">⚠️ Configuration issues:<br>' + issues.join('<br>') + '</span>';
+            }
+        }
+
+        function testSupabaseAuth() {
+            const status = document.getElementById('supabase-auth-status');
+            
+            if (typeof window.supabase === 'undefined') {
+                status.innerHTML = '<span class="error">❌ Supabase not loaded. Check your internet connection.</span>';
+                return;
+            }
+
+            try {
+                const supabase = window.supabase.createClient(CONFIG.supabase.url, CONFIG.supabase.anonKey);
+                
+                // Test auth by checking current session
+                supabase.auth.getSession().then(({ data: { session }, error }) => {
+                    if (error) {
+                        status.innerHTML = '<span class="error">❌ Supabase Auth failed: ' + error.message + '</span>';
+                    } else {
+                        status.innerHTML = '<span class="success">✅ Supabase Auth initialized successfully!</span>';
+                    }
+                });
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Supabase Auth test failed: ' + error.message + '</span>';
+            }
+        }
+
+        async function testSupabase() {
+            const status = document.getElementById('supabase-status');
+            
+            if (typeof window.supabase === 'undefined') {
+                status.innerHTML = '<span class="error">❌ Supabase not loaded. Check your internet connection.</span>';
+                return;
+            }
+
+            try {
+                const supabase = window.supabase.createClient(CONFIG.supabase.url, CONFIG.supabase.anonKey);
+                
+                // Test connection by trying to fetch from users table
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('count')
+                    .limit(1);
+
+                if (error) {
+                    status.innerHTML = '<span class="error">❌ Supabase connection failed: ' + error.message + '</span>';
+                } else {
+                    status.innerHTML = '<span class="success">✅ Supabase connected successfully!</span>';
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Supabase test failed: ' + error.message + '</span>';
+            }
+        }
+
+        // Auto-run tests on page load
+        window.addEventListener('load', () => {
+            testConfig();
+        });
+    </script>
+</body>
+</html>
